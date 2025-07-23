@@ -1,1 +1,10 @@
 en:
+  site_settings:
+    checkin_plugin_enabled: "Enable check-in plugin"
+    checkin_base_points: "Base points for daily check-in"
+    checkin_makeup_cost: "Points cost for makeup check-in"
+    checkin_max_makeup_days: "Maximum days allowed for makeup"
+    checkin_3day_bonus_multiplier: "Bonus multiplier for 3+ consecutive days"
+    checkin_7day_bonus_multiplier: "Bonus multiplier for 7+ consecutive days"
+    checkin_14day_bonus_multiplier: "Bonus multiplier for 14+ consecutive days"
+    checkin_30day_bonus_multiplier: "Bonus multiplier for 30+ consecutive days"

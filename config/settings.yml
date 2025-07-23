@@ -1,4 +1,47 @@
-TODO_plugin_name:
-  plugin_name_enabled:
-    default: false
+checkin:
+  checkin_plugin_enabled:
+    default: true
     client: true
+    description: "Enable the check-in plugin"
+
+  checkin_base_points:
+    default: 10
+    min: 1
+    max: 100
+    description: "Base points earned for daily check-in"
+
+  checkin_makeup_cost:
+    default: 10
+    min: 1
+    max: 100
+    description: "Points cost for makeup check-in"
+
+  checkin_max_makeup_days:
+    default: 7
+    min: 1
+    max: 30
+    description: "Maximum days allowed for makeup check-in"
+
+  checkin_3day_bonus_multiplier:
+    default: 2.0
+    min: 1.0
+    max: 10.0
+    description: "Bonus multiplier for 3+ consecutive days"
+
+  checkin_7day_bonus_multiplier:
+    default: 3.0
+    min: 1.0
+    max: 10.0
+    description: "Bonus multiplier for 7+ consecutive days"
+
+  checkin_14day_bonus_multiplier:
+    default: 4.0
+    min: 1.0
+    max: 10.0
+    description: "Bonus multiplier for 14+ consecutive days"
+
+  checkin_30day_bonus_multiplier:
+    default: 5.0
+    min: 1.0
+    max: 10.0
+    description: "Bonus multiplier for 30+ consecutive days"

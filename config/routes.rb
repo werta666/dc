@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
-MyPluginModule::Engine.routes.draw do
-  get "/examples" => "examples#index"
-  # define routes here
+CheckinPlugin::Engine.routes.draw do
+  # Checkin routes
+  get "/checkin" => "checkin#index"
+  post "/checkin" => "checkin#checkin"
+  post "/checkin/makeup" => "checkin#makeup"
+  get "/checkin/calendar" => "checkin#calendar"
+
+  # Points routes
+  get "/points" => "points#index"
+  get "/points/history" => "points#history"
+  get "/points/leaderboard" => "points#leaderboard"
 end
 
-Discourse::Application.routes.draw { mount ::MyPluginModule::Engine, at: "my-plugin" }
+Discourse::Application.routes.draw { mount ::CheckinPlugin::Engine, at: "checkin-plugin" }

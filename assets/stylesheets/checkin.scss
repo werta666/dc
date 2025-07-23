@@ -1,0 +1,491 @@
+// Check-in Plugin Styles
+
+.checkin-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+  .checkin-header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    h1 {
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .user-points-summary {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      .points-card {
+        background: var(--secondary);
+        border-radius: 8px;
+        padding: 20px;
+        min-width: 120px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        .points-value {
+          font-size: 2em;
+          font-weight: bold;
+          color: var(--primary);
+          margin-bottom: 5px;
+        }
+
+        .points-label {
+          font-size: 0.9em;
+          color: var(--primary-medium);
+        }
+      }
+    }
+  }
+
+  .checkin-main {
+    margin-bottom: 30px;
+
+    .checkin-action-card {
+      background: var(--secondary);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+      .checkin-button-container {
+        .checkin-button {
+          font-size: 1.2em;
+          padding: 15px 30px;
+          border-radius: 8px;
+          margin-bottom: 15px;
+          
+          &.loading {
+            opacity: 0.7;
+          }
+
+          .d-icon {
+            margin-right: 8px;
+          }
+        }
+
+        .checkin-reward-info {
+          color: var(--primary-medium);
+          font-size: 0.9em;
+        }
+      }
+
+      .already-checked-in {
+        color: var(--success);
+        font-size: 1.1em;
+        
+        .d-icon {
+          margin-right: 8px;
+          color: var(--success);
+        }
+      }
+
+      .next-milestone {
+        background: var(--highlight-bg);
+        border-radius: 6px;
+        padding: 15px;
+        margin-top: 20px;
+        color: var(--primary);
+        font-weight: 500;
+      }
+    }
+
+    .makeup-section {
+      background: var(--secondary);
+      border-radius: 8px;
+      padding: 20px;
+
+      h3 {
+        margin-bottom: 15px;
+        color: var(--primary);
+      }
+
+      .makeup-form {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .makeup-date-input {
+          padding: 8px 12px;
+          border: 1px solid var(--primary-low);
+          border-radius: 4px;
+          background: var(--secondary);
+          color: var(--primary);
+        }
+
+        .makeup-button {
+          &.loading {
+            opacity: 0.7;
+          }
+        }
+      }
+
+      .makeup-warning {
+        color: var(--danger);
+        font-size: 0.9em;
+        margin-top: 10px;
+      }
+    }
+  }
+
+  .recent-records {
+    h3 {
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .records-list {
+      .record-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid var(--primary-low);
+        border-radius: 6px;
+        margin-bottom: 10px;
+        background: var(--secondary);
+
+        &.makeup-record {
+          border-left: 4px solid var(--tertiary);
+        }
+
+        .record-date {
+          font-weight: 500;
+
+          .makeup-badge {
+            background: var(--tertiary);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 8px;
+          }
+        }
+
+        .record-points {
+          color: var(--success);
+          font-weight: 500;
+
+          .bonus-multiplier {
+            color: var(--tertiary);
+            font-size: 0.9em;
+          }
+        }
+
+        .record-consecutive {
+          color: var(--primary-medium);
+          font-size: 0.9em;
+        }
+      }
+    }
+
+    .view-all-link {
+      text-align: center;
+      margin-top: 15px;
+
+      a {
+        color: var(--tertiary);
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .no-records {
+      text-align: center;
+      color: var(--primary-medium);
+      padding: 40px;
+      font-style: italic;
+    }
+  }
+}
+
+.points-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+
+  .points-header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    h1 {
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .points-summary {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      .summary-card {
+        background: var(--secondary);
+        border-radius: 8px;
+        padding: 20px;
+        min-width: 140px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        .summary-value {
+          font-size: 2em;
+          font-weight: bold;
+          color: var(--primary);
+          margin-bottom: 5px;
+        }
+
+        .summary-label {
+          font-size: 0.9em;
+          color: var(--primary-medium);
+        }
+      }
+    }
+  }
+
+  .points-tabs {
+    .nav-pills {
+      justify-content: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--primary-low);
+
+      .nav-link {
+        color: var(--primary-medium);
+        border-radius: 0;
+        border-bottom: 2px solid transparent;
+        
+        &.active {
+          background: none;
+          color: var(--primary);
+          border-bottom-color: var(--tertiary);
+        }
+      }
+    }
+
+    .statistics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+
+      .stat-item {
+        background: var(--secondary);
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+
+        .stat-value {
+          font-size: 1.8em;
+          font-weight: bold;
+          color: var(--primary);
+          margin-bottom: 5px;
+        }
+
+        .stat-label {
+          color: var(--primary-medium);
+          font-size: 0.9em;
+        }
+      }
+    }
+
+    .checkin-journey {
+      background: var(--highlight-bg);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+
+      h4 {
+        color: var(--primary);
+        margin-bottom: 15px;
+      }
+
+      p {
+        margin-bottom: 10px;
+        color: var(--primary-medium);
+      }
+    }
+
+    .history-controls, .leaderboard-controls {
+      margin-bottom: 20px;
+      text-align: center;
+
+      .period-selector {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    .history-list {
+      .history-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid var(--primary-low);
+        border-radius: 6px;
+        margin-bottom: 10px;
+        background: var(--secondary);
+
+        &.makeup-record {
+          border-left: 4px solid var(--tertiary);
+        }
+
+        .history-date {
+          font-weight: 500;
+          min-width: 120px;
+
+          .makeup-badge {
+            background: var(--tertiary);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 8px;
+          }
+        }
+
+        .history-details {
+          flex: 1;
+          margin-left: 20px;
+
+          .points-earned {
+            color: var(--success);
+            font-weight: 500;
+            margin-bottom: 5px;
+
+            .bonus-info {
+              color: var(--primary-medium);
+              font-size: 0.9em;
+            }
+          }
+
+          .consecutive-info {
+            color: var(--primary-medium);
+            font-size: 0.9em;
+          }
+
+          .makeup-cost {
+            color: var(--danger);
+            font-size: 0.9em;
+          }
+        }
+      }
+    }
+
+    .pagination-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+
+      .page-info {
+        color: var(--primary-medium);
+      }
+    }
+
+    .leaderboard-list {
+      .leaderboard-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid var(--primary-low);
+        border-radius: 6px;
+        margin-bottom: 10px;
+        background: var(--secondary);
+
+        &.current-user {
+          border-color: var(--tertiary);
+          background: var(--highlight-bg);
+        }
+
+        .rank {
+          font-weight: bold;
+          color: var(--primary);
+          min-width: 40px;
+        }
+
+        .user-info {
+          display: flex;
+          align-items: center;
+          flex: 1;
+          margin-left: 15px;
+
+          .username {
+            margin-left: 10px;
+            font-weight: 500;
+          }
+        }
+
+        .points {
+          color: var(--success);
+          font-weight: 500;
+          margin-right: 15px;
+        }
+
+        .consecutive {
+          color: var(--primary-medium);
+          font-size: 0.9em;
+        }
+      }
+    }
+
+    .current-user-rank {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: var(--highlight-bg);
+      border-radius: 6px;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .no-history, .no-leaderboard {
+      text-align: center;
+      color: var(--primary-medium);
+      padding: 40px;
+      font-style: italic;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .checkin-container, .points-container {
+    padding: 15px;
+
+    .checkin-header .user-points-summary,
+    .points-header .points-summary {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .checkin-main .makeup-section .makeup-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .recent-records .records-list .record-item,
+    .points-tabs .history-list .history-item,
+    .points-tabs .leaderboard-list .leaderboard-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .points-tabs .statistics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

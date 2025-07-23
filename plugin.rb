@@ -1,21 +1,47 @@
 # frozen_string_literal: true
 
-# name: fuck-you
-# about: pandacc
+# name: discourse-checkin-plugin
+# about: A comprehensive check-in plugin with points system, consecutive rewards, and make-up functionality
 # meta_topic_id: TODO
-# version: 6.6.6
+# version: 1.0.0
 # authors: Pandacc
-# url: facker
+# url: https://github.com/pandacc/discourse-checkin-plugin
 # required_version: 2.7.0
 
-enabled_site_setting :plugin_name_enabled
+enabled_site_setting :checkin_plugin_enabled
 
-module ::MyPluginModule
-  PLUGIN_NAME = "fuck-you"
+module ::CheckinPlugin
+  PLUGIN_NAME = "discourse-checkin-plugin"
 end
 
-require_relative "lib/my_plugin_module/engine"
+require_relative "lib/checkin_plugin/engine"
 
 after_initialize do
-  # Code which should run after Rails has finished booting
+  # Load models
+  require_relative "app/models/user_point"
+  require_relative "app/models/checkin_record"
+
+  # Load controllers
+  require_relative "app/controllers/checkin_plugin/checkin_controller"
+  require_relative "app/controllers/checkin_plugin/points_controller"
+
+  # Add user associations
+  add_to_class(:user, :user_point) do
+    has_one :user_point, dependent: :destroy
+    has_many :checkin_records, dependent: :destroy
+
+    def ensure_user_point
+      self.user_point || create_user_point!
+    end
+  end
+
+  # Add serializer fields for user points
+  add_to_serializer(:current_user, :user_point) do
+    UserPoint.find_or_create_for_user(object)
+  end
+
+  add_to_serializer(:current_user, :can_checkin_today) do
+    user_point = UserPoint.find_or_create_for_user(object)
+    user_point.can_checkin_today?
+  end
 end

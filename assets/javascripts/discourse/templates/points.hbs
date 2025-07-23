@@ -1,0 +1,195 @@
+{{#d-section pageClass="points-page" class="points-container"}}
+  <div class="points-header">
+    <h1>{{i18n "points.title"}}</h1>
+    <div class="points-summary">
+      <div class="summary-card">
+        <div class="summary-value">{{this.userPoint.total_points}}</div>
+        <div class="summary-label">{{i18n "points.total_points"}}</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value">{{this.userPoint.available_points}}</div>
+        <div class="summary-label">{{i18n "points.available_points"}}</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-value">{{this.userPoint.used_points}}</div>
+        <div class="summary-label">{{i18n "points.used_points"}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="points-tabs">
+    <nav class="nav nav-pills">
+      <a class="nav-link active" data-toggle="pill" href="#statistics">
+        {{i18n "points.statistics"}}
+      </a>
+      <a class="nav-link" data-toggle="pill" href="#history">
+        {{i18n "points.history"}}
+      </a>
+      <a class="nav-link" data-toggle="pill" href="#leaderboard">
+        {{i18n "points.leaderboard"}}
+      </a>
+    </nav>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="statistics">
+        <div class="statistics-grid">
+          <div class="stat-item">
+            <div class="stat-value">{{this.statistics.total_checkins}}</div>
+            <div class="stat-label">{{i18n "points.total_checkins"}}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{this.statistics.max_consecutive_days}}</div>
+            <div class="stat-label">{{i18n "points.max_consecutive_days"}}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{this.statistics.makeup_checkins}}</div>
+            <div class="stat-label">{{i18n "points.makeup_checkins"}}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{this.statistics.average_points_per_checkin}}</div>
+            <div class="stat-label">{{i18n "points.average_points_per_checkin"}}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{this.statistics.this_month_checkins}}</div>
+            <div class="stat-label">{{i18n "points.this_month_checkins"}}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">{{this.statistics.this_week_checkins}}</div>
+            <div class="stat-label">{{i18n "points.this_week_checkins"}}</div>
+          </div>
+        </div>
+        
+        {{#if this.statistics.first_checkin_date}}
+          <div class="checkin-journey">
+            <h4>{{i18n "points.checkin_journey"}}</h4>
+            <p>
+              {{i18n "points.first_checkin"}} {{moment-format this.statistics.first_checkin_date "YYYY-MM-DD"}}
+            </p>
+            <p>
+              {{i18n "points.last_checkin"}} {{moment-format this.statistics.last_checkin_date "YYYY-MM-DD"}}
+            </p>
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="tab-pane" id="history">
+        <div class="history-controls">
+          <button 
+            class="btn btn-secondary"
+            {{action "loadHistory" 1}}
+            disabled={{this.isLoadingHistory}}
+          >
+            {{#if this.isLoadingHistory}}
+              {{loading-spinner size="small"}}
+            {{else}}
+              {{i18n "points.refresh"}}
+            {{/if}}
+          </button>
+        </div>
+
+        {{#if this.historyRecords}}
+          <div class="history-list">
+            {{#each this.historyRecords as |record|}}
+              <div class="history-item {{if record.is_makeup 'makeup-record'}}">
+                <div class="history-date">
+                  {{moment-format record.checkin_date "YYYY-MM-DD"}}
+                  {{#if record.is_makeup}}
+                    <span class="makeup-badge">{{i18n "checkin.makeup"}}</span>
+                  {{/if}}
+                </div>
+                <div class="history-details">
+                  <div class="points-earned">
+                    +{{record.points_earned}} {{i18n "points.points"}}
+                    {{#if (gt record.bonus_multiplier 1)}}
+                      <span class="bonus-info">({{i18n "points.base_points"}} × {{record.bonus_multiplier}})</span>
+                    {{/if}}
+                  </div>
+                  <div class="consecutive-info">
+                    {{i18n "points.consecutive_days_at_time" count=record.consecutive_days}}
+                  </div>
+                  {{#if record.is_makeup}}
+                    <div class="makeup-cost">
+                      {{i18n "points.makeup_cost"}} -{{record.makeup_cost}} {{i18n "points.points"}}
+                    </div>
+                  {{/if}}
+                </div>
+              </div>
+            {{/each}}
+          </div>
+
+          <div class="pagination-controls">
+            <button 
+              class="btn btn-secondary"
+              {{action "prevPage"}}
+              disabled={{or this.isLoadingHistory (not this.hasPrevPage)}}
+            >
+              {{i18n "points.previous"}}
+            </button>
+            <span class="page-info">
+              {{i18n "points.page_info" current=this.currentPage total=this.totalPages}}
+            </span>
+            <button 
+              class="btn btn-secondary"
+              {{action "nextPage"}}
+              disabled={{or this.isLoadingHistory (not this.hasNextPage)}}
+            >
+              {{i18n "points.next"}}
+            </button>
+          </div>
+        {{else}}
+          <div class="no-history">
+            {{i18n "points.no_history"}}
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="tab-pane" id="leaderboard">
+        <div class="leaderboard-controls">
+          <div class="period-selector">
+            {{#each this.leaderboardPeriods as |period|}}
+              <button 
+                class="btn {{if (eq this.leaderboardPeriod period.key) 'btn-primary' 'btn-secondary'}}"
+                {{action "loadLeaderboard" period.key}}
+                disabled={{this.isLoadingLeaderboard}}
+              >
+                {{i18n (concat "points.period_" period.key)}}
+              </button>
+            {{/each}}
+          </div>
+        </div>
+
+        {{#if this.leaderboard}}
+          <div class="leaderboard-list">
+            {{#each this.leaderboard as |entry|}}
+              <div class="leaderboard-item {{if (eq entry.user.id currentUser.id) 'current-user'}}">
+                <div class="rank">#{{{entry.rank}}}</div>
+                <div class="user-info">
+                  {{avatar entry.user imageSize="small"}}
+                  <span class="username">{{entry.user.username}}</span>
+                </div>
+                <div class="points">{{entry.points}} {{i18n "points.points"}}</div>
+                {{#if entry.consecutive_days}}
+                  <div class="consecutive">{{entry.consecutive_days}} {{i18n "points.days"}}</div>
+                {{/if}}
+              </div>
+            {{/each}}
+          </div>
+
+          {{#if this.currentUserRank}}
+            <div class="current-user-rank">
+              {{i18n "points.your_rank" rank=this.currentUserRank}}
+            </div>
+          {{/if}}
+        {{else}}
+          <div class="no-leaderboard">
+            {{#if this.isLoadingLeaderboard}}
+              {{loading-spinner}}
+            {{else}}
+              {{i18n "points.no_leaderboard_data"}}
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{/d-section}}
