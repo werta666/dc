@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class UserPoint < ActiveRecord::Base
+  self.table_name = 'checkin_user_points'
+
   belongs_to :user
   has_many :checkin_records, through: :user
 
   validates :user_id, presence: true, uniqueness: true
-  validates :total_points, :available_points, :used_points, :consecutive_days, 
+  validates :total_points, :available_points, :used_points, :consecutive_days,
             presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def self.find_or_create_for_user(user)

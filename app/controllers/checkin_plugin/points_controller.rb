@@ -19,7 +19,7 @@ module CheckinPlugin
       per_page = 20
       
       records = current_user.checkin_records
-                           .recent
+                           .order(checkin_date: :desc)
                            .offset((page - 1) * per_page)
                            .limit(per_page)
       

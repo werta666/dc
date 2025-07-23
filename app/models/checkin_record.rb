@@ -9,14 +9,23 @@ class CheckinRecord < ActiveRecord::Base
             presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :bonus_multiplier, presence: true, numericality: { greater_than: 0 }
 
-  scope :for_user, ->(user) { where(user: user) }
+  # Ensure user exists
+  validate :user_exists
+
+  private
+
+  def user_exists
+    errors.add(:user_id, "User must exist") unless User.exists?(id: user_id)
+  end
+
+  scope :for_user, ->(user) { where(user_id: user.id) }
   scope :for_date, ->(date) { where(checkin_date: date) }
   scope :makeup_records, -> { where(is_makeup: true) }
   scope :regular_checkins, -> { where(is_makeup: false) }
   scope :recent, -> { order(checkin_date: :desc) }
 
   def self.create_checkin(user, date = Date.current, is_makeup: false)
-    return nil if exists?(user: user, checkin_date: date)
+    return nil if exists?(user_id: user.id, checkin_date: date)
 
     user_point = UserPoint.find_or_create_for_user(user)
     
@@ -42,7 +51,7 @@ class CheckinRecord < ActiveRecord::Base
 
     # Create checkin record
     checkin_record = create!(
-      user: user,
+      user_id: user.id,
       checkin_date: date,
       points_earned: points_earned,
       is_makeup: is_makeup,
@@ -59,7 +68,7 @@ class CheckinRecord < ActiveRecord::Base
 
   def self.can_makeup?(user, date)
     return false if date >= Date.current
-    return false if exists?(user: user, checkin_date: date)
+    return false if exists?(user_id: user.id, checkin_date: date)
     
     # Check if date is within makeup allowed range
     max_makeup_days = SiteSetting.checkin_max_makeup_days || 7

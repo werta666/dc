@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class CreateUserPoints < ActiveRecord::Migration[7.0]
+class CreateCheckinUserPoints < ActiveRecord::Migration[6.0]
   def change
-    create_table :user_points do |t|
-      t.references :user, null: false, foreign_key: true, index: true
+    create_table :checkin_user_points do |t|
+      t.integer :user_id, null: false
       t.integer :total_points, default: 0, null: false
       t.integer :available_points, default: 0, null: false
       t.integer :used_points, default: 0, null: false
@@ -12,8 +12,8 @@ class CreateUserPoints < ActiveRecord::Migration[7.0]
       t.timestamps
     end
 
-    add_index :user_points, :user_id, unique: true
-    add_index :user_points, :total_points
-    add_index :user_points, :consecutive_days
+    add_index :checkin_user_points, :user_id, unique: true
+    add_index :checkin_user_points, :total_points
+    add_index :checkin_user_points, :consecutive_days
   end
 end

@@ -18,30 +18,20 @@ require_relative "lib/checkin_plugin/engine"
 
 after_initialize do
   # Load models
-  require_relative "app/models/user_point"
-  require_relative "app/models/checkin_record"
+  load File.expand_path("app/models/user_point.rb", __dir__)
+  load File.expand_path("app/models/checkin_record.rb", __dir__)
 
   # Load controllers
-  require_relative "app/controllers/checkin_plugin/checkin_controller"
-  require_relative "app/controllers/checkin_plugin/points_controller"
+  load File.expand_path("app/controllers/checkin_plugin/checkin_controller.rb", __dir__)
+  load File.expand_path("app/controllers/checkin_plugin/points_controller.rb", __dir__)
 
   # Add user associations
-  add_to_class(:user, :user_point) do
+  add_to_class(:user, :user_point_association) do
     has_one :user_point, dependent: :destroy
     has_many :checkin_records, dependent: :destroy
 
     def ensure_user_point
-      self.user_point || create_user_point!
+      self.user_point || UserPoint.create!(user_id: self.id)
     end
-  end
-
-  # Add serializer fields for user points
-  add_to_serializer(:current_user, :user_point) do
-    UserPoint.find_or_create_for_user(object)
-  end
-
-  add_to_serializer(:current_user, :can_checkin_today) do
-    user_point = UserPoint.find_or_create_for_user(object)
-    user_point.can_checkin_today?
   end
 end

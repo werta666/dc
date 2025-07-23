@@ -7,7 +7,7 @@ module CheckinPlugin
 
     def index
       user_point = UserPoint.find_or_create_for_user(current_user)
-      recent_records = current_user.checkin_records.recent.limit(30)
+      recent_records = current_user.checkin_records.order(checkin_date: :desc).limit(30)
       
       render json: {
         user_point: serialize_user_point(user_point),
